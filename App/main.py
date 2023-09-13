@@ -2,6 +2,8 @@ from typing import Optional
 
 from fastapi import FastAPI, HTTPException, status, Response, Path
 
+from pyngrok import ngrok
+
 from models import Alien, aliens
 
 from busca_api import buscar_dados
@@ -122,4 +124,6 @@ async def kanye():
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("main:app", host='10.234.88.203', port=8000, log_level="info", reload=True)
+    ngrok_tunnel = ngrok.connect(8000)
+    print("Public URL: ", ngrok_tunnel.public_url)
+    uvicorn.run("main:app", host='0.0.0.0', port=8000, log_level="info", reload=True)
