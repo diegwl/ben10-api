@@ -1,12 +1,10 @@
-from typing import Optional
-
-from fastapi import FastAPI, HTTPException, status, Response, Path
+from fastapi import FastAPI, HTTPException, status, Response, Path, Query
 
 from pyngrok import ngrok
 
-from models import Alien, aliens
+from models import Alien, Pirate, aliens
 
-from busca_api import buscar_dados
+from service import buscar_dados_kanye, buscar_dados_onepiece_local, buscar_pirata
 
 app = FastAPI(
     root_path="api/v1/aliens",
@@ -75,6 +73,7 @@ app = FastAPI(
 #     },
 # }
 
+# API - BEN 10
 @app.get('/api/v1/aliens')
 async def get_aliens():
     return aliens
@@ -116,14 +115,26 @@ async def delete_alien(alien_id: int):
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Esse alien não existe.")
 
+# CONSUMINDO API KANYE
 @app.get('/api/v1/kanye')
 async def kanye():
-    quote = buscar_dados()
+    quote = buscar_dados_kanye()
     return {"Kanye said": quote}
+
+# CONSUMINDO API REDE LOCAL
+@app.get('/api/v1/pirates')
+async def onepiece():
+    data = buscar_dados_onepiece_local()
+    return data
+
+@app.get('/api/v1/pirates/{pirate_id}')
+async def pirate():
+    data = buscar_pirata()
+    return data
 
 if __name__ == "__main__":
     import uvicorn
 
-    ngrok_tunnel = ngrok.connect(8000)
-    print("Public URL: ", ngrok_tunnel.public_url)
+    # ngrok_tunnel = ngrok.connect(8000)
+    # print("Public URL: ", ngrok_tunnel.public_url)
     uvicorn.run("main:app", host='0.0.0.0', port=8000, log_level="info", reload=True)

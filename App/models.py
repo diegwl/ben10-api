@@ -8,6 +8,19 @@ class Alien(BaseModel):
     homeWorld: str
     body: str
 
+class Pirate(BaseModel):
+    id: Optional[int]= None
+    french_name: str
+    job: str
+    size: str
+    birthday: Optional[str] = None
+    age: Optional[str] = None
+    bounty: Optional[str] = None
+    status: Optional[str] = None
+    crewId: Optional[int] = None
+    fruitId: Optional[int] = None
+    secondFruitId: Optional[int] = None
+
 aliens = [
     Alien(id=1, name="Wildmutt", species="Vulpimancer", homeWorld="Vulpin", body="Animalistic"),
     Alien(id=2, name="Heatblast", species="Pyronita", homeWorld="Pyros", body="Fiery Humanoid"),
