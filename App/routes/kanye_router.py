@@ -1,6 +1,6 @@
 from fastapi import APIRouter, FastAPI, HTTPException, status, Response, Path, Query
 
-from service import buscar_dados_kanye
+from service.service import buscar_dados_kanye
 
 router = APIRouter()
 

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, FastAPI, HTTPException, status, Response, Path, Query
 
-from models import Alien, aliens
+from models.models import Alien, aliens
 
 router = APIRouter()
 
