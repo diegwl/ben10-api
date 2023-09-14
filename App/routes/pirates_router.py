@@ -5,7 +5,7 @@ from service.service import buscar_dados_onepiece_local, buscar_pirata
 router = APIRouter()
 
 # CONSUMINDO API REDE LOCAL
-@router.get('/')
+@router.get('')
 async def onepiece():
     data = buscar_dados_onepiece_local()
     return data
