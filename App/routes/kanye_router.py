@@ -5,7 +5,7 @@ from service.service import buscar_dados_kanye
 router = APIRouter()
 
 # CONSUMINDO API KANYE
-@router.get('')
+@router.get('/')
 async def kanye():
     quote = buscar_dados_kanye()
     return {"Kanye said": quote}

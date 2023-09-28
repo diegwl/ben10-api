@@ -5,7 +5,7 @@ from models.models import Alien, aliens
 router = APIRouter()
 
 # API - BEN 10
-@router.get('')
+@router.get('/')
 async def get_aliens():
     return aliens
 
@@ -18,7 +18,7 @@ async def get_alien(alien_id:int = Path(title='ID do Alien')):
     except:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Alien não encontrado')
 
-@router.post('', status_code=status.HTTP_201_CREATED)
+@router.post('/', status_code=status.HTTP_201_CREATED)
 async def post_alien(alien: Alien):
     next_id: int = len(aliens) + 1
     alien.id = next_id
