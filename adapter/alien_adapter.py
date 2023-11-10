@@ -1,6 +1,7 @@
 from typing import TypeVar
 from pydantic import BaseModel
 from domain.entities.alien import AlienDto
+from adapter.schemas.planet_schema import PlanetModel
 
 DataT = TypeVar("DataT")
 
@@ -12,6 +13,8 @@ class AlienTortoiseAdapter(BaseModel):
         return await self.model.all()
     
     async def create(self, alien: AlienDto):
+        planet = await PlanetModel.get(id=alien.home_world)
+        alien.home_world = planet
         return await self.model.create(**alien.model_dump())
     
     async def get(self, alien_id: int):

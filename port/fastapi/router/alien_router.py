@@ -2,6 +2,7 @@ from typing import List
 
 from fastapi import APIRouter, Depends, status, HTTPException, Response
 from domain.entities.alien import Alien, AlienDto
+from domain.entities.alien_planet import AlienPlanet
 from domain.service.alien_service import AlienService
 
 from port.factory.alien_factory import alien_factory
@@ -11,7 +12,7 @@ router = APIRouter(
     tags=["aliens"]
 )
 
-@router.get("/", response_model=List[Alien])
+@router.get("/", response_model=List[AlienPlanet])
 async def list_aliens(service: AlienService = Depends(alien_factory)):
     return await service.list()
 

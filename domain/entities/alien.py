@@ -4,7 +4,7 @@ from typing import Optional
 class AlienDto(BaseModel):
     name: str
     species: str
-    home_world: str
+    home_world: int
     body: str
     
 class Alien(AlienDto):
