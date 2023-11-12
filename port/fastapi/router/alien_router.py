@@ -2,6 +2,7 @@ from typing import List
 
 from fastapi import APIRouter, Depends, status, HTTPException, Response
 from domain.entities.alien import Alien, AlienDto
+from domain.entities.alien_planet import AlienPlanet, AlienPlanetDto
 from domain.service.alien_service import AlienService
 
 from port.factory.alien_factory import alien_factory
@@ -20,12 +21,12 @@ async def create_alien(body: AlienDto, service: AlienService = Depends(alien_fac
     alien = AlienDto(**body.model_dump())
     return await service.create(alien)
 
-@router.get("/{alien_id}", status_code=status.HTTP_200_OK, response_model=Alien)
+@router.get("/{alien_id}", status_code=status.HTTP_200_OK, response_model=AlienPlanet)
 async def get_alien(alien_id: int, service: AlienService = Depends(alien_factory)):
-    try: 
-        return await service.get(alien_id)
-    except:
-        raise HTTPException(detail='Alien não encontrado.', status_code=status.HTTP_404_NOT_FOUND)
+     
+    return await service.get(alien_id)
+    # except:
+    #     raise HTTPException(detail='Alien não encontrado.', status_code=status.HTTP_404_NOT_FOUND)
 
 @router.put("/{alien_id}", status_code=status.HTTP_202_ACCEPTED)
 async def put_alien(alien_id: int, alien: AlienDto, service: AlienService = Depends(alien_factory)):
