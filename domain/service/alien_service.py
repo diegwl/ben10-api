@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from adapter.alien_adapter import AlienTortoiseAdapter
 from domain.entities.alien import AlienDto
+from domain.entities.alien_planet import AlienPlanetDto
 
 class AlienService(BaseModel):
     

@@ -1,5 +1,5 @@
 from pydantic import Field, BaseModel
-from typing import List
+from typing import List, Optional
 from domain.entities.alien import Alien
 
 class PlanetDto(BaseModel):
@@ -9,4 +9,4 @@ class Planet(PlanetDto):
     id: int
     
 class PlanetDetail(Planet):
-    species: List[Alien]
+    aliens: Optional[List[Alien]]

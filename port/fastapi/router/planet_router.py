@@ -29,3 +29,11 @@ async def get_planet(planet_id: int, service: PlanetService = Depends(planet_fac
         return await service.get(planet_id)
     except:
         raise HTTPException(detail='Planet não encontrado.', status_code=status.HTTP_404_NOT_FOUND)
+    
+@router.put("/{planet_id}", status_code=status.HTTP_202_ACCEPTED)
+async def put_planet(planet_id: int, planet: PlanetDto, service: PlanetService = Depends(planet_factory)):
+    return await service.put(planet, planet_id)
+
+@router.delete("/{planet_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_planet(planet_id: int, service: PlanetService = Depends(planet_factory)):
+    return await service.delete(planet_id)

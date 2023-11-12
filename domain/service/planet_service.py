@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from adapter.planet_adapter import PlanetTortoiseAdapter
 from domain.entities.planet import PlanetDto
+from adapter.schemas.alien_schema import AlienModel
 
 class PlanetService(BaseModel):
     
@@ -13,7 +14,9 @@ class PlanetService(BaseModel):
         return await self.adapter.create(planet)
     
     async def get(self, planet_id: int):
-        return await self.adapter.get(planet_id)
+        planet = await self.adapter.get(planet_id)
+        planet.aliens = await AlienModel.filter(home_world_id=planet.id)
+        return planet
     
     async def put(self, planet: PlanetDto, planet_id: int):
         return await self.adapter.put(planet, planet_id)
