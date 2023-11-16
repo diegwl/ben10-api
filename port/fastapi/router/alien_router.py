@@ -24,9 +24,11 @@ async def create_alien(body: AlienDto, service: AlienService = Depends(alien_fac
 @router.get("/{alien_id}", status_code=status.HTTP_200_OK, response_model=AlienPlanet)
 async def get_alien(alien_id: int, service: AlienService = Depends(alien_factory)):
      
-    return await service.get(alien_id)
-    # except:
-    #     raise HTTPException(detail='Alien não encontrado.', status_code=status.HTTP_404_NOT_FOUND)
+    alien = await service.get(alien_id)
+    if alien:
+        return alien
+    else:
+        raise HTTPException(detail='Alien não encontrado.', status_code=status.HTTP_404_NOT_FOUND)
 
 @router.put("/{alien_id}", status_code=status.HTTP_202_ACCEPTED)
 async def put_alien(alien_id: int, alien: AlienDto, service: AlienService = Depends(alien_factory)):
@@ -35,3 +37,11 @@ async def put_alien(alien_id: int, alien: AlienDto, service: AlienService = Depe
 @router.delete("/{alien_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_alien(alien_id: int, service: AlienService = Depends(alien_factory)):
     return await service.delete(alien_id)
+
+@router.get("/search/{alien_name}", status_code=status.HTTP_202_ACCEPTED)
+async def search_alien(alien_name: str, in_lucky: bool = False, service: AlienService = Depends(alien_factory)):
+    alien = await service.search(alien_name, in_lucky)
+    if alien:
+        return alien
+    else:
+        raise HTTPException(detail="Alien não encontrado", status_code=status.HTTP_404_NOT_FOUND)

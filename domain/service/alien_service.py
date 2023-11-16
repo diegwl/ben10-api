@@ -21,3 +21,6 @@ class AlienService(BaseModel):
     
     async def delete(self, alien_id: int):
         return await self.adapter.delete(alien_id)
+    
+    async def search(self, alien_name: str, in_lucky: bool):
+        return await self.adapter.search(alien_name, in_lucky)

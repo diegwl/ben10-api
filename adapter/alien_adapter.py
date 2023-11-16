@@ -19,8 +19,9 @@ class AlienTortoiseAdapter(BaseModel):
         return await self.model.create(**alien.model_dump())
     
     async def get(self, alien_id: int):
-        alien = await self.model.get(id=alien_id)
-        alien.home_world = await PlanetModel.get(id=alien.home_world_id)
+        alien = await self.model.get_or_none(id=alien_id)
+        if alien:
+            alien.home_world = await PlanetModel.get(id=alien.home_world_id)
         return alien
     
     async def put(self, alien: AlienDto, alien_id: int):
@@ -28,3 +29,9 @@ class AlienTortoiseAdapter(BaseModel):
     
     async def delete(self, alien_id: int):
         return await self.model.filter(id=alien_id).delete()
+    
+    async def search(self, alien_name: str, in_lucky: bool):
+        if in_lucky:
+            return await self.model.filter(name__icontains=alien_name).get_or_none().first()
+        else:
+            return await self.model.filter(name__icontains=alien_name).all()
